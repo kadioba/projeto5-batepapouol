@@ -8,7 +8,6 @@ let objetoNomeUsuario;
 let mensagens = [];
 
 enviarNomeUsuario();
-buscaMensagens();
 
 function enviarNomeUsuario (){
     nomeUsuario = prompt("Digite seu nome:");
