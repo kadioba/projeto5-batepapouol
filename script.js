@@ -78,13 +78,13 @@ function exibirMensagens(){
                 </li>`
         }
         else if(mensagens[i].type == 'message'){
-            if(mensagens[i].to == 'Todos'){
-                mensagemAExibir = `
-                    <li data-test="message" class="mensagem-normal posicao${i}">
-                        <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
-                    </li>`
-            }
-            else if(mensagens[i].to == nomeUsuario || mensagens[i].from == nomeUsuario){
+            mensagemAExibir = `
+                <li data-test="message" class="mensagem-normal posicao${i}">
+                    <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
+                </li>`
+        }
+        else if(mensagens[i].type == 'private_message'){
+            if(mensagens[i].from == nomeUsuario || mensagens[i].to == nomeUsuario){
                 mensagemAExibir = `
                     <li data-test="message" class="mensagem-reservada posicao${i}">
                         <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
