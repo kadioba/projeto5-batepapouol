@@ -18,16 +18,18 @@ function enviarNomeUsuario (){
     requisicaoEnvioDeNome.catch(envioNomeErro);
 
     function envioNomeSucesso(resposta){
-        setInterval(confirmaAtividade, 5000);
-        buscaMensagens();
-        setInterval(buscaMensagens, 3000);
+        entrouNaSala();
     }
 
     function envioNomeErro(resposta){
         enviarNomeUsuario();
     }
+}
 
-    
+function entrouNaSala(){
+    buscaMensagens();
+    setInterval(confirmaAtividade, 5000);
+    setInterval(buscaMensagens, 3000);
 }
 
 function confirmaAtividade(){
@@ -35,16 +37,6 @@ function confirmaAtividade(){
 
     requisicaoDeAtividade.then(conexaoAtiva);
     requisicaoDeAtividade.catch(conexaoPerdida);
-
-    function conexaoAtiva(resposta){
-        console.log("conexao ativa");
-        console.log(resposta);
-    }
-
-    function conexaoPerdida(resposta){
-        console.log("conexao perdida");
-        console.log(resposta);
-    }
 }
 
 function buscaMensagens(){
