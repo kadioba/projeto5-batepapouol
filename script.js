@@ -74,20 +74,20 @@ function exibirMensagens(){
         if(mensagens[i].type == 'status'){
             console.log(mensagens[i].type);
             mensagemAExibir = `
-                <li class="mesagem-de-status posicao${i}">
+                <li data-test="message" class="mesagem-de-status posicao${i}">
                     <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span>  <span class="mensagem">${mensagens[i].text}</span></p>
                 </li>`
         }
         else if(mensagens[i].type == 'message'){
             if(mensagens[i].to == 'Todos'){
                 mensagemAExibir = `
-                    <li class="mensagem-normal posicao${i}">
+                    <li data-test="message" class="mensagem-normal posicao${i}">
                         <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
                     </li>`
             }
             else if(mensagens[i].to == nomeUsuario || mensagens[i].from == nomeUsuario){
                 mensagemAExibir = `
-                    <li class="mensagem-reservada posicao${i}">
+                    <li data-test="message" class="mensagem-reservada posicao${i}">
                         <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
                     </li>`
             }
