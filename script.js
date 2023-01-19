@@ -4,7 +4,11 @@
 let nomeUsuario;
 let objetoNomeUsuario;
 
+// Array que guarda as mensagens
+let mensagens = [];
+
 enviarNomeUsuario();
+buscaMensagens();
 
 function enviarNomeUsuario (){
     nomeUsuario = prompt("Digite seu nome:");
@@ -15,15 +19,12 @@ function enviarNomeUsuario (){
     requisicaoEnvioDeNome.catch(envioNomeErro);
 
     function envioNomeSucesso(resposta){
-        console.log("Sucesso");
-        console.log("then");
-        console.log(resposta);
         setInterval(confirmaAtividade, 5000);
+        buscaMensagens();
+        setInterval(buscaMensagens, 3000);
     }
 
     function envioNomeErro(resposta){
-        let codigoErro = resposta.response.status;
-        console.log(codigoErro);
         enviarNomeUsuario();
     }
 
@@ -46,3 +47,58 @@ function confirmaAtividade(){
         console.log(resposta);
     }
 }
+
+function buscaMensagens(){
+    const requisicaoMensagens = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+
+    requisicaoMensagens.then(guardarMensagens);
+}
+
+function guardarMensagens(objetoMensagens){
+    mensagens = [];
+    mensagens = objetoMensagens.data;
+    console.log(mensagens);
+
+    exibirMensagens();
+}
+
+function exibirMensagens(){
+
+    const listaDeMensagens = document.querySelector("ul");
+    listaDeMensagens.innerHTML = '';
+    console.log(listaDeMensagens);
+
+    for(let i = 0; i < mensagens.length; i++){
+        let mensagemAExibir = '';
+
+        if(mensagens[i].type == 'status'){
+            console.log(mensagens[i].type);
+            mensagemAExibir = `
+                <li class="mesagem-de-status posicao${i}">
+                    <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span>  <span class="mensagem">${mensagens[i].text}</span></p>
+                </li>`
+        }
+        else if(mensagens[i].type == 'message'){
+            if(mensagens[i].to == 'Todos'){
+                mensagemAExibir = `
+                    <li class="mensagem-normal posicao${i}">
+                        <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
+                    </li>`
+            }
+            else if(mensagens[i].to == nomeUsuario || mensagens[i].from == nomeUsuario){
+                mensagemAExibir = `
+                    <li class="mensagem-reservada posicao${i}">
+                        <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
+                    </li>`
+            }
+        }
+        listaDeMensagens.innerHTML = listaDeMensagens.innerHTML + mensagemAExibir;
+
+    }
+    const posicaoUltimaMensagem = mensagens.length - 1;
+    console.log(posicaoUltimaMensagem);
+    const ultimaMensagem = document.querySelector(`.posicao${posicaoUltimaMensagem}`);
+    console.log(ultimaMensagem);
+    ultimaMensagem.scrollIntoView();
+}
+
