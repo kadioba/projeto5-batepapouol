@@ -102,3 +102,27 @@ function exibirMensagens(){
     ultimaMensagem.scrollIntoView();
 }
 
+function enviarMensagem(){
+    const mensagemDigitada = document.querySelector(".enviar-mensagem").value;
+
+    const objetoMensagem = {
+        from: nomeUsuario,
+        to: "Todos",
+        text: mensagemDigitada,
+        type: "message"
+    }
+
+    const envioMensagemServidor = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", objetoMensagem);
+
+    envioMensagemServidor.then(mensagemEnviada);
+    envioMensagemServidor.catch(mensagemNaoEnviada);
+
+    function mensagemEnviada(dadosMensagemEnviada){
+        buscaMensagens();
+        document.querySelector(".enviar-mensagem").value = '';
+    }
+
+    function mensagemNaoEnviada(){
+        window.location.reload();
+    }
+}
