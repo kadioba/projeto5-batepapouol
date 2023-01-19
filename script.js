@@ -7,6 +7,8 @@ let objetoNomeUsuario;
 // Array que guarda as mensagens
 let mensagens = [];
 
+let usuarioLogado;
+
 enviarNomeUsuario();
 
 function enviarNomeUsuario (){
@@ -22,14 +24,20 @@ function enviarNomeUsuario (){
     }
 
     function envioNomeErro(resposta){
-        enviarNomeUsuario();
+        naoEntrouNaSala();
     }
 }
 
 function entrouNaSala(){
+    usuarioLogado = true;
     buscaMensagens();
     setInterval(confirmaAtividade, 5000);
     setInterval(buscaMensagens, 3000);
+}
+
+function naoEntrouNaSala(){
+    usuarioLogado = false;
+    enviarNomeUsuario();
 }
 
 function confirmaAtividade(){
@@ -40,9 +48,11 @@ function confirmaAtividade(){
 }
 
 function buscaMensagens(){
-    const requisicaoMensagens = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    if(usuarioLogado){
+        const requisicaoMensagens = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
 
-    requisicaoMensagens.then(guardarMensagens);
+        requisicaoMensagens.then(guardarMensagens);
+    }
 }
 
 function guardarMensagens(objetoMensagens){
