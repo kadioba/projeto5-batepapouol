@@ -20,31 +20,21 @@ function enviarNomeUsuario (){
     requisicaoEnvioDeNome.catch(envioNomeErro);
 
     function envioNomeSucesso(resposta){
-        entrouNaSala();
+        buscaMensagens();
+        setInterval(confirmaAtividade, 5000);
+        setInterval(buscaMensagens, 3000);
+        console.log(resposta);
     }
 
     function envioNomeErro(resposta){
-        naoEntrouNaSala();
+        enviarNomeUsuario();
+        console.log(resposta);
     }
-}
-
-function entrouNaSala(){
-    usuarioLogado = true;
-    buscaMensagens();
-    setInterval(confirmaAtividade, 5000);
-    setInterval(buscaMensagens, 3000);
-}
-
-function naoEntrouNaSala(){
-    usuarioLogado = false;
-    enviarNomeUsuario();
 }
 
 function confirmaAtividade(){
     const requisicaoDeAtividade = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", objetoNomeUsuario);
 
-    requisicaoDeAtividade.then(conexaoAtiva);
-    requisicaoDeAtividade.catch(conexaoPerdida);
 }
 
 function buscaMensagens(){
@@ -58,7 +48,6 @@ function buscaMensagens(){
 function guardarMensagens(objetoMensagens){
     mensagens = [];
     mensagens = objetoMensagens.data;
-    console.log(mensagens);
 
     exibirMensagens();
 }
@@ -97,14 +86,12 @@ function exibirMensagens(){
 
     }
     const posicaoUltimaMensagem = mensagens.length - 1;
-    console.log(posicaoUltimaMensagem);
     const ultimaMensagem = document.querySelector(`.posicao${posicaoUltimaMensagem}`);
-    console.log(ultimaMensagem);
     ultimaMensagem.scrollIntoView();
 }
 
 function enviarMensagem(){
-    const mensagemDigitada = document.querySelector(".enviar-mensagem").value;
+    const mensagemDigitada = document.querySelector(".campo-mensagem").value;
 
     const objetoMensagem = {
         from: nomeUsuario,
