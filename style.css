@@ -23,6 +23,11 @@ header img{
     height: 53px;
 }
 
+header button{
+    background-color: #FFFFFF;
+    border: none;
+}
+
 header ion-icon{
     font-size: 45px;
 }
@@ -31,6 +36,7 @@ main{
     background-color: #F3F3F3;
     margin-top: 106px;
     margin-bottom: 80px;
+    width: 100%;
 }
 
 main li{
@@ -38,6 +44,8 @@ main li{
     box-sizing: border-box;
     margin-bottom: 4px;
     border-radius: 2px;
+    width: 100%;
+    word-break: break-all;
 }
 
 .mensagem-reservada{
@@ -70,20 +78,25 @@ main p{
 footer{
     height: 80px;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 17px;
-    padding-right: 17px;
-    box-sizing: border-box;
     position: fixed;
     bottom: 0px;
     left: 0px;
     background-color: #FFFFFF;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+
 }
 
-footer input{
+footer div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 17px;
+    padding-right: 17px;
+    margin-top: 25px;
+    box-sizing: border-box;
+}
+
+footer div input{
     font-size: 18px;
     font-style: italic;
     font-weight: 400;
@@ -91,10 +104,161 @@ footer input{
     border: none;
 }
 
-footer input:focus{
+footer div input:focus{
     outline: 0;
 }
 
-footer ion-icon{
-    font-size: 26px;
+footer div ion-icon{
+    font-size: 25px;
+}
+
+.mostrar-destinatario{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 25px;
+    color: #505050;
+    padding-left: 17px;
+    box-sizing: border-box;
+
+}
+
+.selecao-contato{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    display: flex;
+}
+
+.fundo-transparente{
+    width: 30%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.sidebar{
+    width: 70%;
+    height: 100%;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.selecao-contato h2{
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    margin: 25px 0px;
+}
+
+.sidebar ul{
+    width: 85%;
+}
+
+.sidebar li{
+    width: 100%;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6px 0px;
+}
+
+.sidebar li div{
+    display: flex;
+    align-items: center;
+}
+
+.contatos li div ion-icon{
+    font-size: 25px;
+    color: #000000;
+    margin-right: 7px;
+}
+
+.sidebar p{
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.visibilidade li div ion-icon{
+    font-size: 25px;
+    color: #000000;
+    margin-right: 7px;
+}
+
+.checkmark, .checkmark-participante{
+    color: #28BB25;
+    font-size: 29px;
+    font-weight: 100;
+}
+
+.escondido{
+    visibility: hidden;
+}
+
+.tela-de-entrada{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 4;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tela-de-entrada img{
+    margin-top: 75px;
+    margin-bottom: 94px;
+    width: 130px;
+    height: 92px;
+}
+
+.dados-entrada{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.entrada-nome-usuario{
+    width: 260px;
+    height: 54px;
+    font-weight: 400;
+    font-size: 18px;
+    color: #AEAEAE;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+}
+
+.entrada-nome-usuario:focus{
+    outline: 0;
+}
+
+.dados-entrada button{
+    width: 109px;
+    height: 45px;
+    background-color: #E7E7E7;
+    border-radius: 9px;
+    font-weight: 400;
+    font-size: 18px;
+    color: #696969;
+    border: none;
+    margin-top: 15px;
+}
+
+.carregando-login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carregando-login img{
+    width: 120px;
+    height: 120px;
 }

@@ -19,7 +19,9 @@
 <body>
     <header>
         <img src="./imagens/logo.png" alt="Logo Bate Papo UOL">
-        <ion-icon name="people"></ion-icon>
+        <button onclick="mostrarParticipantes()" data-test="open-participants">
+            <ion-icon name="people"></ion-icon>
+        </button>
     </header>
 
     <main>
@@ -28,9 +30,50 @@
     </main>
     
     <footer>
-        <input data-test="input-message" class="campo-mensagem" type="text" placeholder="Escreva aqui...">
-        <ion-icon name="paper-plane-outline" onclick="enviarMensagem()" data-test="send-message"></ion-icon>
+        <div>
+            <input data-test="input-message" class="campo-mensagem" type="text" placeholder="Escreva aqui...">
+            <ion-icon name="paper-plane-outline" onclick="enviarMensagem()" data-test="send-message"></ion-icon>
+        </div>
+        <p class="mostrar-destinatario" data-test="recipient"></p>
     </footer>
+
+    <div class="selecao-contato escondido">
+        <div class="fundo-transparente" onclick="ocultarParticipantes()"></div>
+        <div class="sidebar">
+            <h2>Escolha um contato <br>para enviar mensagem:</h2>
+            <ul class="contatos">
+            </ul>
+            <h2>Escolha a visibilidade:</h2>
+            <ul class="visibilidade">
+                <li onclick="selecionarVisibilidade(this)">
+                    <div data-test="public">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Público</p>
+                    </div>
+                    <ion-icon name="checkmark" class="checkmark selecionado" data-test="check"></ion-icon>
+                </li>
+                <li onclick="selecionarVisibilidade(this)" data-test="private">
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Reservadamente</p>
+                    </div>
+                    <ion-icon name="checkmark" class="checkmark escondido" data-test="check"></ion-icon>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tela-de-entrada">
+        <img src="./imagens/logo.png" alt="Logo Bate Papo UOL">
+        <div class="dados-entrada">
+            <input type="text" placeholder="Digite seu nome" class="entrada-nome-usuario" data-test="input-name">
+            <button onclick="enviarNomeUsuario()" data-test="send-name">Entrar</button>
+        </div>
+        <div class="carregando-login escondido">
+            <img src="./imagens/FaithfulJadedLarva-size_restricted.gif" alt="GIF de espera">
+            <p>Entrando...</p>
+        </div>
+    </div>
 
     <!-- Link da biblioteca de icones -->
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
