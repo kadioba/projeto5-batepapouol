@@ -17,7 +17,7 @@ let visibilidade;
 const objetoTodos = {name: "Todos"};
 
 document.addEventListener('keypress', function(e){
-    if(e.which == 13){
+    if(e.which === 13){
         enviarMensagem();
     }
  }, false);
@@ -35,7 +35,7 @@ function enviarNomeUsuario (){
     document.querySelector(".dados-entrada").classList.add("escondido");
     document.querySelector(".carregando-login").classList.remove("escondido");
 
-    function envioNomeSucesso(resposta){
+    function envioNomeSucesso(){
         document.querySelector(".tela-de-entrada").classList.add("escondido");
         buscaMensagens();
         buscarParticipantes();
@@ -46,7 +46,7 @@ function enviarNomeUsuario (){
         visibilidade = "Público";
     }
 
-    function envioNomeErro(resposta){
+    function envioNomeErro(){
         alert("Esse nome de usuario já está em uso");
         document.querySelector(".dados-entrada").classList.remove("escondido");
         document.querySelector(".carregando-login").classList.add("escondido");
@@ -54,7 +54,7 @@ function enviarNomeUsuario (){
 }
 
 function confirmaAtividade(){
-    const requisicaoDeAtividade = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", objetoNomeUsuario);
+    axios.post("https://mock-api.driven.com.br/api/v6/uol/status", objetoNomeUsuario);
 
 }
 
@@ -79,26 +79,24 @@ function exibirMensagens(){
     for(let i = 0; i < mensagens.length; i++){
         let mensagemAExibir = '';
 
-        if(mensagens[i].type == 'status'){
+        if(mensagens[i].type === 'status'){
             mensagemAExibir = `
                 <li data-test="message" class="mesagem-de-status posicao${i}">
                     <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span>  <span class="mensagem">${mensagens[i].text}</span></p>
-                </li>`
-        }
-        else if(mensagens[i].type == 'message'){
+                </li>`}
+
+        else if(mensagens[i].type === 'message'){
             mensagemAExibir = `
                 <li data-test="message" class="mensagem-normal posicao${i}">
                     <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
-                </li>`
-        }
-        else if(mensagens[i].type == 'private_message'){
-            if(mensagens[i].from == nomeUsuario || mensagens[i].to == nomeUsuario){
-                mensagemAExibir = `
-                    <li data-test="message" class="mensagem-reservada posicao${i}">
-                        <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
-                    </li>`
-            }
-        }
+                </li>`}
+
+        else if(mensagens[i].type === 'private_message' && (mensagens[i].from === nomeUsuario || mensagens[i].to === nomeUsuario)){
+            mensagemAExibir = `
+                <li data-test="message" class="mensagem-reservada posicao${i}">
+                    <p><span class="horario-de-envio">(${mensagens[i].time})</span>  <span class="remetente">${mensagens[i].from}</span> para <span class="destinatario">${mensagens[i].to}</span>:  <span class="mensagem">${mensagens[i].text}</span></p>
+                </li>`}
+
         listaDeMensagens.innerHTML = listaDeMensagens.innerHTML + mensagemAExibir;
 
     }
@@ -111,10 +109,10 @@ function enviarMensagem(){
     const mensagemDigitada = document.querySelector(".campo-mensagem").value;
     let tipoMensagem;
 
-    if(visibilidade == "Público"){
-        tipoMensagem = "message"; 
+    if(visibilidade === "Público"){
+        tipoMensagem = "message";
     }
-    else if(visibilidade == "Reservadamente"){
+    else if(visibilidade === "Reservadamente"){
         tipoMensagem = "private_message";
     }
 
@@ -130,7 +128,7 @@ function enviarMensagem(){
     envioMensagemServidor.then(mensagemEnviada);
     envioMensagemServidor.catch(mensagemNaoEnviada);
 
-    function mensagemEnviada(dadosMensagemEnviada){
+    function mensagemEnviada(){
         buscaMensagens();
         document.querySelector(".campo-mensagem").value = '';
     }
@@ -172,8 +170,8 @@ function buscouParticipantes(participantes){
     }
 
     function verificaDestinatario(){
-        for(i = 0; i < listaParticipantes.length; i++){
-            if(listaParticipantes[i].name == destinatario){
+        for(let i = 0; i < listaParticipantes.length; i++){
+            if(listaParticipantes[i].name === destinatario){
                 destinatarioAtivo = destinatario;
             }
         }
@@ -197,7 +195,7 @@ function exibeParticipantes(){
     let elementoParticipante;
 
     for(let i = 0; i < listaParticipantes.length; i++){
-        if(listaParticipantes[i].name != nomeUsuario && listaParticipantes[i].name != "Todos"){
+        if(listaParticipantes[i].name !== nomeUsuario && listaParticipantes[i].name !== "Todos"){
             elementoParticipante = `
                 <li onclick="selecionarDestinatario(this)" data-test="participant">
                     <div>
@@ -218,10 +216,10 @@ function marcaDestinatario(){
     const participantesListados = document.querySelectorAll(".checkmark-participante");
     
     for(let i = 0; i < participantesListados.length; i++){
-        let parentParticipanteListado = participantesListados[i].parentNode;
-        let nomeParticipante = parentParticipanteListado.querySelector("p").innerHTML;
+        const parentParticipanteListado = participantesListados[i].parentNode;
+        const nomeParticipante = parentParticipanteListado.querySelector("p").innerHTML;
 
-        if(nomeParticipante == destinatario){
+        if(nomeParticipante === destinatario){
             participantesListados[i].classList.add("selecionado");
             participantesListados[i].classList.remove("escondido");
         }
@@ -229,27 +227,27 @@ function marcaDestinatario(){
 
 }
 
+const destinatarioInput = document.querySelector(".mostrar-destinatario");
+
 function selecionarDestinatario(destinatarioSelecionado){
     destinatario = destinatarioSelecionado.querySelector("p").innerHTML;
 
     // Remove o selecionado e marca o novo
-    let listaDestinatarios = destinatarioSelecionado.parentNode;
-    let checkJaSelecionado = listaDestinatarios.querySelector(".selecionado");
+    const listaDestinatarios = destinatarioSelecionado.parentNode;
+    const checkJaSelecionado = listaDestinatarios.querySelector(".selecionado");
 
     checkJaSelecionado.classList.add("escondido");
     checkJaSelecionado.classList.remove("selecionado");
 
-    let checkSelecionado = destinatarioSelecionado.querySelector(".checkmark-participante");
+    const checkSelecionado = destinatarioSelecionado.querySelector(".checkmark-participante");
     checkSelecionado.classList.add("selecionado");
     checkSelecionado.classList.remove("escondido");
 
-    if(visibilidade == "Reservadamente"){
-        let destinatarioInput = document.querySelector(".mostrar-destinatario");
+    if(visibilidade === "Reservadamente"){
         destinatarioInput.innerHTML = `Enviando para ${destinatario} (reservadamente)`;
     }
 
-    else if(visibilidade == "Público"){
-        let destinatarioInput = document.querySelector(".mostrar-destinatario");
+    else if(visibilidade === "Público"){
         destinatarioInput.innerHTML = ``;
         }
 }
@@ -258,23 +256,21 @@ function selecionarVisibilidade(visibilidadeSelecionada){
     visibilidade = visibilidadeSelecionada.querySelector("p").innerHTML;
 
     // Remove o selecionado e marca o novo
-    let listaVisibilidade = visibilidadeSelecionada.parentNode;
-    let checkJaSelecionado = listaVisibilidade.querySelector(".selecionado");
+    const listaVisibilidade = visibilidadeSelecionada.parentNode;
+    const checkJaSelecionado = listaVisibilidade.querySelector(".selecionado");
 
     checkJaSelecionado.classList.add("escondido");
     checkJaSelecionado.classList.remove("selecionado");
 
-    let checkSelecionado = visibilidadeSelecionada.querySelector(".checkmark");
+    const checkSelecionado = visibilidadeSelecionada.querySelector(".checkmark");
     checkSelecionado.classList.add("selecionado");
     checkSelecionado.classList.remove("escondido");
 
-    if(visibilidade == "Reservadamente"){
-    let destinatarioInput = document.querySelector(".mostrar-destinatario");
+    if(visibilidade === "Reservadamente"){
     destinatarioInput.innerHTML = `Enviando para ${destinatario} (reservadamente)`;
     }
 
-    else if(visibilidade == "Público"){
-        let destinatarioInput = document.querySelector(".mostrar-destinatario");
+    else if(visibilidade === "Público"){
         destinatarioInput.innerHTML = ``;
         }
 }

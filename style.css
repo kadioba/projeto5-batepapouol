@@ -152,6 +152,7 @@ footer div ion-icon{
     font-weight: 700;
     color: #000000;
     margin: 25px 0px;
+    text-align: center;
 }
 
 .sidebar ul{
@@ -234,6 +235,7 @@ footer div ion-icon{
     color: #AEAEAE;
     border: 1px solid #D7D7D7;
     border-radius: 4px;
+    text-align: center;
 }
 
 .entrada-nome-usuario:focus{
